@@ -1,0 +1,5 @@
+name: MaintenancePlugin
+version: 1.0
+author: Pixfri
+main: fr.pixfri.plugin.MaintenancePlugin
+api-version: 1.18
