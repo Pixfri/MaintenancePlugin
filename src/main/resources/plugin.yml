@@ -3,3 +3,7 @@ version: 1.0
 author: Pixfri
 main: fr.pixfri.plugin.MaintenancePlugin
 api-version: 1.18
+commands:
+  maintenance:
+    description: The general command of this plugin.
+    usage: /maintenance <on/off> to toggle the maintenance on the server, /maintenance add <Pseudo> to add a player on the maintenance list, /maintenance remove <Pseudo> to remove a player from the maintenance list, /maintenance list to see the list of the players on the maintenance list
