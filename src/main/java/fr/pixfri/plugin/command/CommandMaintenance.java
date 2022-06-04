@@ -3,6 +3,7 @@ package fr.pixfri.plugin.command;
 import fr.pixfri.plugin.MaintenancePlugin;
 import fr.pixfri.plugin.constants.Messages;
 import fr.pixfri.plugin.util.ServerManagement;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +27,11 @@ public class CommandMaintenance implements CommandExecutor {
                         MaintenancePlugin.MAINTENANCE_ENABLED = false;
 
                         sender.sendMessage(Messages.MAINTENANCE_DISABLED.getMessage());
+                    } else {
+                        sender.sendMessage(Component.text(Messages.COMMAND_INVALID_ARG.getMessage()));
                     }
+                } else {
+                    sender.sendMessage(Component.text(Messages.COMMAND_INVALID_ARGS_LENGTH.getMessage()));
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "You aren't allowed to perform this command!");

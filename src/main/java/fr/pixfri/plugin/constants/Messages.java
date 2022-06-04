@@ -4,6 +4,9 @@ import org.bukkit.ChatColor;
 
 public enum Messages {
 
+    COMMAND_INVALID_ARGS_LENGTH(ChatColor.RED + "Invalid arguments number."),
+    COMMAND_INVALID_ARG(ChatColor.RED + "Invalid arguments."),
+
     MAINTENANCE_ENABLED(ChatColor.GOLD + "Maintenance is now enabled."),
     MAINTENANCE_DISABLED(ChatColor.GOLD + "Maintenance is now disabled."),
 
