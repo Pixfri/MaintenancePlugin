@@ -1,8 +1,10 @@
 package fr.pixfri.plugin.command;
 
+import com.sun.tools.javac.Main;
 import fr.pixfri.plugin.MaintenancePlugin;
 import fr.pixfri.plugin.constants.Messages;
 import fr.pixfri.plugin.core.YamlAuthorized;
+import fr.pixfri.plugin.core.YamlConfig;
 import fr.pixfri.plugin.mojang.MojangRequest;
 import fr.pixfri.plugin.util.ServerManagement;
 import net.kyori.adventure.text.Component;
@@ -36,17 +38,26 @@ public class CommandMaintenance implements CommandExecutor {
 
                     // enable maintenance.
                     if(args[0].equalsIgnoreCase("on")) {
-                        MaintenancePlugin.MAINTENANCE_ENABLED = true;
-                        ServerManagement.kickAllNotAllowed();
-
-                        sender.sendMessage(Messages.MAINTENANCE_ENABLED.getMessage());
+                        try {
+                            MaintenancePlugin.MAINTENANCE_ENABLED = true;
+                            new YamlConfig(maintenancePlugin).write();
+                            sender.sendMessage(Component.text(Messages.MAINTENANCE_ENABLED.getMessage()));
+                        } catch (IOException e) {
+                            sender.sendMessage(Component.text(Messages.MAINTENANCE_STATUS_SAVE_FAIL.getMessage()));
+                            e.printStackTrace();
+                        }
                     }
 
                     // disable maintenance.
                     else if(args[0].equalsIgnoreCase("off")) {
-                        MaintenancePlugin.MAINTENANCE_ENABLED = false;
-
-                        sender.sendMessage(Messages.MAINTENANCE_DISABLED.getMessage());
+                        try {
+                            MaintenancePlugin.MAINTENANCE_ENABLED = false;
+                            new YamlConfig(maintenancePlugin).write();
+                            sender.sendMessage(Component.text(Messages.MAINTENANCE_DISABLED.getMessage()));
+                        } catch (IOException e) {
+                            sender.sendMessage(Component.text(Messages.MAINTENANCE_STATUS_SAVE_FAIL.getMessage()));
+                            e.printStackTrace();
+                        }
                     }
 
                     // list all the players in the maintenance allowed players list.
@@ -83,7 +94,7 @@ public class CommandMaintenance implements CommandExecutor {
                                 new YamlAuthorized(maintenancePlugin).writeAuthorizedPlayers();
                                 sender.sendMessage(Component.text(Messages.PLAYER_MAINTENANCE_ADDED.getMessage()));
                             } catch (IOException e) {
-                                sender.sendMessage(Component.text(Messages.SAVE_FAILED.getMessage()));
+                                sender.sendMessage(Component.text(Messages.PLAYER_SAVE_FAILED.getMessage()));
                                 e.printStackTrace();
                             }
 
@@ -94,7 +105,7 @@ public class CommandMaintenance implements CommandExecutor {
                                 new YamlAuthorized(maintenancePlugin).writeAuthorizedPlayers();
                                 sender.sendMessage(Component.text(Messages.PLAYER_MAINTENANCE_ADDED.getMessage()));
                             } catch (IOException e) {
-                                sender.sendMessage(Component.text(Messages.SAVE_FAILED.getMessage()));
+                                sender.sendMessage(Component.text(Messages.PLAYER_SAVE_FAILED.getMessage()));
                                 e.printStackTrace();
                             }
                         }
@@ -114,7 +125,7 @@ public class CommandMaintenance implements CommandExecutor {
                                 new YamlAuthorized(maintenancePlugin).writeAuthorizedPlayers();
                                 sender.sendMessage(Component.text(Messages.PLAYER_MAINTENANCE_REMOVED.getMessage()));
                             } catch (IOException e) {
-                                sender.sendMessage(Component.text(Messages.SAVE_FAILED.getMessage()));
+                                sender.sendMessage(Component.text(Messages.PLAYER_SAVE_FAILED.getMessage()));
                                 e.printStackTrace();
                             }
 
@@ -125,7 +136,7 @@ public class CommandMaintenance implements CommandExecutor {
                                 new YamlAuthorized(maintenancePlugin).writeAuthorizedPlayers();
                                 sender.sendMessage(Component.text(Messages.PLAYER_MAINTENANCE_REMOVED.getMessage()));
                             } catch (IOException e) {
-                                sender.sendMessage(Component.text(Messages.SAVE_FAILED.getMessage()));
+                                sender.sendMessage(Component.text(Messages.PLAYER_SAVE_FAILED.getMessage()));
                                 e.printStackTrace();
                             }
                         }
