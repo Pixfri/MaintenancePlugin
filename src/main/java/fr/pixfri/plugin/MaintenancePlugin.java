@@ -5,15 +5,21 @@ import fr.pixfri.plugin.listeners.PlayerLoginListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 public class MaintenancePlugin extends JavaPlugin {
 
+    private static Set<UUID> AUTHORIZED = new HashSet<>();
+
     public static boolean MAINTENANCE_ENABLED = false;
+
     private PluginManager pluginManager;
 
     @Override
     public void onEnable() {
         pluginManager = getServer().getPluginManager();
-
         pluginManager.registerEvents(new PlayerLoginListener(), this);
 
         getCommand("maintenance").setExecutor(new CommandMaintenance());
@@ -22,5 +28,9 @@ public class MaintenancePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    public static Set<UUID> getAUTHORIZED() {
+        return AUTHORIZED;
     }
 }

@@ -16,7 +16,9 @@ public class PlayerLoginListener implements Listener {
         final Player player = event.getPlayer();
 
         if(MaintenancePlugin.MAINTENANCE_ENABLED) {
-            if(!player.hasPermission("maintenanceplugin.permissions.op")) {
+            if(player.hasPermission("maintenanceplugin.permissions.op") || MaintenancePlugin.getAUTHORIZED().contains(player.getUniqueId())) {
+                return;
+            } else {
                 player.kick(Component.text(Messages.PLAYER_MAINTENANCE_RECONNECT_KICK.getMessage()));
             }
         }

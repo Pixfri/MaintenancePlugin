@@ -3,10 +3,12 @@ plugins {
 }
 
 group 'fr.pixfri'
-version '0.0.1-1.18.2'
+version '1.0.0-1.18.2'
 
 repositories {
     mavenCentral()
+    mavenLocal() // This is needed for CraftBukkit and Spigot.
+
     maven {
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
 
@@ -29,13 +31,17 @@ repositories {
     maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = 'https://oss.sonatype.org/content/repositories/central' }
-    mavenLocal() // This is needed for CraftBukkit and Spigot.
 }
 
 dependencies {
+
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'commons-codec:commons-codec:1.15'
+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 
     // Pick only one of these and read the comment in the repositories block.
     compileOnly 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
-    //  compileOnly 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
+    // compileOnly 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
 }
