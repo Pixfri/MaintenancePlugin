@@ -11,6 +11,8 @@ public enum Messages {
     MAINTENANCE_ENABLED(ChatColor.GOLD + "Maintenance is now enabled."),
     MAINTENANCE_DISABLED(ChatColor.GOLD + "Maintenance is now disabled."),
 
+    SAVE_FAILED(ChatColor.RED + "Failed during the save of authorized players. Please read the logs."),
+
     PLAYER_NOT_OP(ChatColor.RED + "You aren't allowed to perform this command."),
     PLAYER_MAINTENANCE_ADDED(ChatColor.LIGHT_PURPLE + "Player added to the authorized players list."),
     PLAYER_MAINTENANCE_REMOVED(ChatColor.LIGHT_PURPLE + "Player removed from the authorized players list."),

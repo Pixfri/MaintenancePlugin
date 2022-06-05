@@ -1,6 +1,7 @@
 package fr.pixfri.plugin;
 
 import fr.pixfri.plugin.command.CommandMaintenance;
+import fr.pixfri.plugin.core.YamlAuthorized;
 import fr.pixfri.plugin.listeners.PlayerLoginListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,10 +20,12 @@ public class MaintenancePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        readAuthorizedPlayersList();
+
         pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerLoginListener(), this);
 
-        getCommand("maintenance").setExecutor(new CommandMaintenance());
+        getCommand("maintenance").setExecutor(new CommandMaintenance(this));
     }
 
     @Override
@@ -32,5 +35,9 @@ public class MaintenancePlugin extends JavaPlugin {
 
     public static Set<UUID> getAUTHORIZED() {
         return AUTHORIZED;
+    }
+
+    private void readAuthorizedPlayersList() {
+        MaintenancePlugin.AUTHORIZED = new YamlAuthorized(this).readAuthorizedPlayers();
     }
 }
