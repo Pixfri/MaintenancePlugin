@@ -42,12 +42,14 @@ public class CommandMaintenance implements CommandExecutor {
                             ServerManagement.kickAllNotAllowed();
                             new YamlConfig(maintenancePlugin).write();
 
+
+
                             if(MaintenancePlugin.MAINTENANCE_DURATION > 0) {
                                 final int duration = MaintenancePlugin.MAINTENANCE_DURATION;
 
-                                Bukkit.getScheduler().scheduleSyncDelayedTask(maintenancePlugin, () -> {
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "maintenance off");
-                                }, duration * 20L);
+                                Bukkit.getScheduler().scheduleSyncDelayedTask(maintenancePlugin, () ->
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "maintenance off"),
+                                        duration * 20L);
                             }
 
                             sender.sendMessage(Component.text(Messages.MAINTENANCE_ENABLED.getMessage()));
@@ -158,7 +160,8 @@ public class CommandMaintenance implements CommandExecutor {
                         MaintenancePlugin.DELAY_BEFORE_MAINTENANCE = delay;
 
                         Bukkit.getScheduler().scheduleSyncDelayedTask(maintenancePlugin, () -> {
-                                Bukkit.getServer().sendMessage(Component.text(ChatColor.LIGHT_PURPLE + "" + delay + "seconds before the maintenance."));
+
+                            Bukkit.getServer().sendMessage(Component.text(ChatColor.LIGHT_PURPLE + "" + delay + " seconds before the maintenance."));
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "maintenance on");
                             }, delay * 20L); // the last arg convert the number of seconds indicated in game in ticks
                     }

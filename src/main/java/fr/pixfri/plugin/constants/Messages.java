@@ -13,6 +13,8 @@ public enum Messages {
 
     PLAYER_SAVE_FAILED(ChatColor.RED + "Fail during the save of authorized players. Please read the logs."),
     MAINTENANCE_STATUS_SAVE_FAIL(ChatColor.RED + "Cannot save the state of the maintenance. Please read the logs."),
+    MAINTENANCE_DELAY_SAVE_FAIL(ChatColor.RED + "Cannot save the maintenance delay. Please read the logs."),
+    MAINTENANCE_DURATION_SAVE_FAIL(ChatColor.RED + "Cannot save the maintenance duration. Please read the logs."),
 
     PLAYER_NOT_OP(ChatColor.RED + "You aren't allowed to perform this command."),
     PLAYER_MAINTENANCE_ADDED(ChatColor.LIGHT_PURPLE + "Player added to the authorized players list."),

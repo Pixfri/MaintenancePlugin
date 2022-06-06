@@ -18,7 +18,6 @@ public class YamlConfig {
     }
 
     public void write() throws IOException {
-        //TODO: Save the maintenance delay and the maintenance duration in config.yml
         configuration.set("maintenance_enabled", MaintenancePlugin.MAINTENANCE_ENABLED);
         configuration.save(savedFile);
     }
