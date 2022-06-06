@@ -1,6 +1,5 @@
 package fr.pixfri.plugin.command;
 
-import com.sun.tools.javac.Main;
 import fr.pixfri.plugin.MaintenancePlugin;
 import fr.pixfri.plugin.constants.Messages;
 import fr.pixfri.plugin.core.YamlAuthorized;
@@ -40,7 +39,17 @@ public class CommandMaintenance implements CommandExecutor {
                     if(args[0].equalsIgnoreCase("on")) {
                         try {
                             MaintenancePlugin.MAINTENANCE_ENABLED = true;
+                            ServerManagement.kickAllNotAllowed();
                             new YamlConfig(maintenancePlugin).write();
+
+                            if(MaintenancePlugin.MAINTENANCE_DURATION > 0) {
+                                final int duration = MaintenancePlugin.MAINTENANCE_DURATION;
+
+                                Bukkit.getScheduler().scheduleSyncDelayedTask(maintenancePlugin, () -> {
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "maintenance off");
+                                }, duration * 20L);
+                            }
+
                             sender.sendMessage(Component.text(Messages.MAINTENANCE_ENABLED.getMessage()));
                         } catch (IOException e) {
                             sender.sendMessage(Component.text(Messages.MAINTENANCE_STATUS_SAVE_FAIL.getMessage()));
@@ -140,6 +149,27 @@ public class CommandMaintenance implements CommandExecutor {
                                 e.printStackTrace();
                             }
                         }
+                    }
+
+                    // Maintenance delay
+                    else if(args[0].equalsIgnoreCase("delay")) {
+                        final int delay = Integer.parseInt(args[1]); // Convert the arg (String) in seconds (int)
+
+                        MaintenancePlugin.DELAY_BEFORE_MAINTENANCE = delay;
+
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(maintenancePlugin, () -> {
+                                Bukkit.getServer().sendMessage(Component.text(ChatColor.LIGHT_PURPLE + "" + delay + "seconds before the maintenance."));
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "maintenance on");
+                            }, delay * 20L); // the last arg convert the number of seconds indicated in game in ticks
+                    }
+
+                    // Add a duration to the maintenance
+                    else if(args[0].equalsIgnoreCase("duration")) {
+                        final int duration = Integer.parseInt(args[1]); // Convert the arg (String) in seconds (int)
+
+                        MaintenancePlugin.MAINTENANCE_DURATION = duration;
+
+                        Bukkit.getServer().sendMessage(Component.text(ChatColor.LIGHT_PURPLE + "The maintenance will last " + duration + "seconds"));
                     }
 
                     else {

@@ -16,6 +16,8 @@ public class MaintenancePlugin extends JavaPlugin {
     private static Set<UUID> AUTHORIZED = new HashSet<>();
 
     public static boolean MAINTENANCE_ENABLED = false;
+    public static int DELAY_BEFORE_MAINTENANCE = 0;
+    public static int MAINTENANCE_DURATION = 0;
 
     private PluginManager pluginManager;
 
